@@ -19,7 +19,7 @@ module.exports = {
     saltRounds: '2',
   },
   email: {
-    sourceAddress: 'noreply@gleemeet.com',
-    replyToAddress: 'noreply@gleemeet.com',
+    sourceAddress: 'noreply@mycityonlinebackend.com',
+    replyToAddress: 'noreply@mycityonlinebackend.com',
   },
 };
