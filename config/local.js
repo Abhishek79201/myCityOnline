@@ -4,11 +4,9 @@ module.exports = {
     port: '4000',
     adminPort: '4001',
   },
-  sqlDb: {
-    port: '3306',
-    host: 'search-searched-zynf7am35kelqsqflpka6jvcky.aos.ap-south-1.on.aws',
+  mongoDB: {
+    uri: 'mongodb://localhost:27017/dotodo',
     protocol: 'https',
-    auth: 'admin:Admin12345@',
   },
   jwt: {
     tokenSecret: 'developmentjwtsecret',
@@ -17,9 +15,5 @@ module.exports = {
     refreshTokenExpireTime: '180 days',
     refreshTokenHashSecret: 'refreshTokenHash',
     saltRounds: '2',
-  },
-  email: {
-    sourceAddress: 'noreply@mycityonlinebackend.com',
-    replyToAddress: 'noreply@mycityonlinebackend.com',
-  },
+  }
 };

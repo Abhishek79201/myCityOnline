@@ -1,21 +1,11 @@
 const express = require('express');
-const Joi = require('joi');
 const validator = require('express-joi-validation').createValidator({});
-const { signIn, emailAuthVerify, signUp } = require('../controller/auth');
-
+const { signUp, emailAuth, googleAuth } = require('../controller/auth');
+const { onBoardSchema, googleAuthBody, emailAuthBody } = require('../validator/authValidation');
+const { findUser } = require('../middleware/auth');
 const router = express.Router();
 
-const emailVerifyAuthBody = Joi.object({
-  email: Joi.string().email().required(),
-  otp: Joi.string().max(6).required(),
-});
-
-router.post('/signin', validator.body(emailVerifyAuthBody), signIn);
-router.post('/signup', validator.body(emailVerifyAuthBody), signUp);
-router.post(
-  '/email-verify',
-  validator.body(emailVerifyAuthBody),
-  emailAuthVerify,
-);
-
+router.post('/signup', validator.body(onBoardSchema), findUser, signUp);
+router.post('/google', validator.body(googleAuthBody), googleAuth);
+router.post('/email', validator.body(emailAuthBody), emailAuth);
 module.exports = router;

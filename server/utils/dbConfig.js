@@ -1,36 +1,32 @@
-const Sequelize = require('sequelize');
+const mongoose = require('mongoose');
 const logger = require('./logger');
+const config = require('./../../config/index');
 
-// Initialize Sequelize with database connection parameters
-const sequelize = new Sequelize({
-  dialect: 'mysql',
-  host: 'localhost', // or your host IP
-  port: 3306,
-  username: 'your_username',
-  password: 'your_password',
-  database: 'your_database_name',
+// MongoDB connection parameters
+const uri = config.mongoDB.uri;
+
+const connectToMongoDB = async () => {
+  try {
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    logger.info('Connected successfully to MongoDB');
+  } catch (err) {
+    logger.error('Unable to connect to MongoDB:', err);
+  }
+};
+
+mongoose.connection.on('error', (err) => {
+  logger.error('MongoDB connection error:', err);
 });
 
-// Define your models here
-const User = sequelize.define('user', {
-  username: Sequelize.STRING,
-  email: Sequelize.STRING,
+mongoose.connection.once('open', () => {
+  logger.info('MongoDB connection established');
 });
 
-// Define associations, validations, etc. here
-
-// Synchronize the models with the database
-sequelize
-  .sync()
-  .then(() => {
-    logger.info('Database synchronized');
-  })
-  .catch((err) => {
-    logger.info('Unable to synchronize database:', err);
-  });
+connectToMongoDB();
 
 module.exports = {
-  sequelize,
-  User,
-  // Other models if any
+  mongoose,
 };

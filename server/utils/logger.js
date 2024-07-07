@@ -23,11 +23,6 @@ function buildDevLogger() {
   });
 }
 
-// const esTransport = new ElasticsearchTransport({
-//   client: opensearchClient,
-//   index: logConstants.loggingIndex.toLowerCase(),
-// });
-
 function buildProdLogger() {
   return createLogger({
     format: combine(
@@ -36,7 +31,6 @@ function buildProdLogger() {
       errors({ stack: true }),
       logFormat,
     ),
-    // transports: [new transports.Console(), esTransport],
   });
 }
 
